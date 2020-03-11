@@ -1,3 +1,36 @@
-<h1>Parse Temperatures</h1>
-
-<input type="file" #csvReader name="Upload CSV" id="txtFileUpload" (change)="uploadListener($event)" accept=".csv" />
+<div class="container" style="margin-top: 5%">
+  <h1>Parse Temperatures</h1>
+  <div class="row">
+    <div class="col-md-7">
+      <input (change)="uploadListener($event)" type="file" #csvReader name="Upload CSV" class="btn btn-primary" id="txtFileUpload" accept=".csv" />
+    </div>
+    <div class="col-md-5">
+      <input (click)="fileReset()" type="button" value="Reset" class="btn btn-secondary" />
+    </div>
+  </div>
+  <hr>
+  <div class="row" style="font-weight: bold;">
+    <div class="col-md-3"></div>
+    <div class="col-md-3">Days</div>
+    <div class="col-md-3">Hours</div>
+    <div class="col-md-3">Minutes</div>
+  </div>
+  <div class="row text-light bg-dark">
+    <div class="col-md-3"><b>Summary</b></div>
+    <div class="col-md-3">{{calculationSummary.days}}</div>
+    <div class="col-md-3">{{calculationSummary.hours}}</div>
+    <div class="col-md-3">{{calculationSummary.minutes}}</div>
+  </div>
+  <div *ngFor="let item of calculatedData" class="row">
+    <div class="col-md-3" [innerHTML]="item.HtmlText"></div>
+    <div class="col-md-3">
+      {{item.Days}}
+    </div>
+    <div class="col-md-3">
+      {{item.Hours}}
+    </div>
+    <div class="col-md-3">
+      {{item.Minutes}}
+    </div>
+  </div>
+</div>
