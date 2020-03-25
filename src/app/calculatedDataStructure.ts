@@ -11,11 +11,11 @@ export class CalculatedDataStructure {
     this.minutesDifference = minutesDifference;
   }
 
-  private increaseDay() {
+  private increaseDay(): void {
     this.days++;
   }
 
-  private increaseHour() {
+  private increaseHour(): void {
     this.hours++;
     if (this.hours >= 24) {
       this.increaseDay();
@@ -23,7 +23,7 @@ export class CalculatedDataStructure {
     }
   }
 
-  public increaseMinutes() {
+  public increaseMinutes(): void {
     this.minutes += this.minutesDifference;
     if (this.minutes >= 60) {
       this.increaseHour();

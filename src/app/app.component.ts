@@ -14,13 +14,31 @@ export class AppComponent {
   @ViewChild('csvReader', { static: false }) csvReader: any;
 
   private recordsFromCSV: Array<TemperatureDataStructure> = [];
+  private htmlForCalculatedResults: Array<string> = [
+    '<b>15</b>&#8451; - <b>25</b>&#8451;',
+    '&#60;<b>15</b>&#8451;',
+    '&#62;<b>25</b>&#8451; &nbsp; &le;<b>30</b>&#8451;',
+    '&#62;<b>30</b>&#8451; &nbsp; &le;<b>40</b>&#8451;',
+    '&#62;<b>40</b>&#8451'
+  ];
+
+  public delimiterType: number = 1;
+  public dataLoggerType: number = 1;
+
+  public changeDelimiterType(changedValue: number): void {
+    this.delimiterType = changedValue;
+  }
+
+  public changeDataLoggerType(changedValue: number): void {
+    this.dataLoggerType = changedValue;
+  }
 
   public calculatedData: Array<CalculatedDataStructure> = [
-    new CalculatedDataStructure('<b>15</b>&#8451; - <b>25</b>&#8451;'),
-    new CalculatedDataStructure('&#60;<b>15</b>&#8451;'),
-    new CalculatedDataStructure('&#62;<b>25</b>&#8451; &nbsp; &le;<b>30</b>&#8451;'),
-    new CalculatedDataStructure('&#62;<b>30</b>&#8451; &nbsp; &le;<b>40</b>&#8451;'),
-    new CalculatedDataStructure('&#62;<b>40</b>&#8451;')
+    new CalculatedDataStructure(this.htmlForCalculatedResults[0]),
+    new CalculatedDataStructure(this.htmlForCalculatedResults[1]),
+    new CalculatedDataStructure(this.htmlForCalculatedResults[2]),
+    new CalculatedDataStructure(this.htmlForCalculatedResults[3]),
+    new CalculatedDataStructure(this.htmlForCalculatedResults[4])
   ];
 
   public calculationSummary: CalculatedSummary = new CalculatedSummary();
@@ -28,18 +46,16 @@ export class AppComponent {
   public fileReset(): void {
     this.csvReader.nativeElement.value = "";
     this.recordsFromCSV = [];
-    this.calculationSummary.days = 0;
-    this.calculationSummary.hours = 0;
-    this.calculationSummary.minutes = 0;
+    this.calculationSummary.resetSummary();
     this.calculatedData = [
-      new CalculatedDataStructure('<b>15</b>&#8451; - <b>25</b>&#8451;'),
-      new CalculatedDataStructure('&#60;<b>15</b>&#8451;'),
-      new CalculatedDataStructure('&#62;<b>25</b>&#8451; &nbsp; &le;<b>30</b>&#8451;'),
-      new CalculatedDataStructure('&#62;<b>30</b>&#8451; &nbsp; &le;<b>40</b>&#8451;'),
-      new CalculatedDataStructure('&#62;<b>40</b>&#8451;')
+      new CalculatedDataStructure(this.htmlForCalculatedResults[0]),
+      new CalculatedDataStructure(this.htmlForCalculatedResults[1]),
+      new CalculatedDataStructure(this.htmlForCalculatedResults[2]),
+      new CalculatedDataStructure(this.htmlForCalculatedResults[3]),
+      new CalculatedDataStructure(this.htmlForCalculatedResults[4])
     ];
   }
-  
+
   public uploadListener($event: any): void {
 
     const files = $event.srcElement.files;
@@ -76,11 +92,11 @@ export class AppComponent {
       const secondValue = parseInt(moment(this.recordsFromCSV[1].time, 'HH:mm:ss').format('mm'));
       const difference = secondValue - firstValue;
       this.calculatedData = [
-        new CalculatedDataStructure('<b>15</b>&#8451; - <b>25</b>&#8451;', difference),
-        new CalculatedDataStructure('&#60;<b>15</b>&#8451;', difference),
-        new CalculatedDataStructure('&#62;<b>25</b>&#8451; &nbsp; &le;<b>30</b>&#8451;', difference),
-        new CalculatedDataStructure('&#62;<b>30</b>&#8451; &nbsp; &le;<b>40</b>&#8451;', difference),
-        new CalculatedDataStructure('&#62;<b>40</b>&#8451;', difference)
+        new CalculatedDataStructure(this.htmlForCalculatedResults[0], difference),
+        new CalculatedDataStructure(this.htmlForCalculatedResults[1], difference),
+        new CalculatedDataStructure(this.htmlForCalculatedResults[2], difference),
+        new CalculatedDataStructure(this.htmlForCalculatedResults[3], difference),
+        new CalculatedDataStructure(this.htmlForCalculatedResults[4], difference)
       ];
     }
 
@@ -103,11 +119,11 @@ export class AppComponent {
     });
   }
 
-  private calculateSumScenario() {
+  private calculateSumScenario(): void {
     this.calculatedData.forEach(o => {
-      this.calculationSummary.days += o.Days;
-      this.calculationSummary.hours += o.Hours;
-      this.calculationSummary.minutes += o.Minutes;
+      this.calculationSummary.increaseDay(o.Days);
+      this.calculationSummary.increaseHour(o.Hours);
+      this.calculationSummary.increaseMinutes(o.Minutes);
     });
   }
 

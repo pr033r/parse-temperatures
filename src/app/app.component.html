@@ -9,6 +9,38 @@
     </div>
   </div>
   <hr>
+  <div class="row">
+    Choose delimiter:
+  </div>
+  <div class="row">
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      <label class="btn btn-secondary active">
+        <input type="radio" name="semicolon" id="semicolonDelimiterId" autocomplete="off"
+          [checked]="delimiterType == 1" 
+          (click)="changeDelimiterType(1)">
+        Semicolon <b>( ; )</b>
+      </label>
+      <label class="btn btn-secondary">
+        <input type="radio" name="comma" id="commaDelimiterId" autocomplete="off"
+          [checked]="delimiterType == 2" 
+          (click)="changeDelimiterType(2)">
+        Comma <b>( , )</b>
+      </label>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    Choose data logger type:
+  </div>
+  <div class="row">
+    <img src="../assets/firstTypeDataLogger.png" alt="First type of data logger"
+      [className]="dataLoggerType == 1 ? 'choosen-data-logger' : 'not-choosen-data-logger'"
+      (click)="changeDataLoggerType(1)">
+    <img src="../assets/secondTypeDataLogger.png" alt="Second type of data logger"
+      [className]="dataLoggerType == 2 ? 'choosen-data-logger' : 'not-choosen-data-logger'"
+      (click)="changeDataLoggerType(2)">
+  </div>
+  <hr>
   <div class="row" style="font-weight: bold;">
     <div class="col-md-3"></div>
     <div class="col-md-3">Days</div>

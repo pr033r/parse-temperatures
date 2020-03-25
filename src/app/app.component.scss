@@ -1,0 +1,15 @@
+$data-logger-border: 7px;
+
+%parent-for-data-logger {
+  cursor: pointer;
+}
+
+.choosen-data-logger {
+  @extend %parent-for-data-logger;
+  border: $data-logger-border solid #007bff;
+}
+
+.not-choosen-data-logger {
+  @extend %parent-for-data-logger;
+  border: $data-logger-border solid white;
+}
