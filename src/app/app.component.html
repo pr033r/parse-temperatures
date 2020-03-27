@@ -1,68 +1,93 @@
 <div class="container" style="margin-top: 5%">
   <h1>Parse Temperatures</h1>
+  <br>
   <div class="row">
-    <div class="col-md-7">
-      <input (change)="uploadListener($event)" type="file" #csvReader name="Upload CSV" class="btn btn-primary" id="txtFileUpload" accept=".csv" />
+    <div class="col-md-1">
+      <h1>1.</h1>
     </div>
-    <div class="col-md-5">
-      <input (click)="fileReset()" type="button" value="Reset" class="btn btn-secondary" />
-    </div>
-  </div>
-  <hr>
-  <div class="row">
-    Choose delimiter:
-  </div>
-  <div class="row">
-    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-      <label class="btn btn-secondary active">
-        <input type="radio" name="semicolon" id="semicolonDelimiterId" autocomplete="off"
-          [checked]="delimiterType == 1" 
-          (click)="changeDelimiterType(1)">
-        Semicolon <b>( ; )</b>
-      </label>
-      <label class="btn btn-secondary">
-        <input type="radio" name="comma" id="commaDelimiterId" autocomplete="off"
-          [checked]="delimiterType == 2" 
-          (click)="changeDelimiterType(2)">
-        Comma <b>( , )</b>
-      </label>
+    <div class="col-md-11">
+      <div class="row">
+        Choose data logger type:
+      </div>
+      <div class="row">
+        <img src="../assets/firstTypeDataLogger.png" alt="First type of data logger"
+          [className]="dataLoggerType == 1 ? 'choosen-data-logger' : 'not-choosen-data-logger'"
+          (click)="changeDataLoggerType(1)">
+        <img src="../assets/secondTypeDataLogger.png" alt="Second type of data logger"
+          [className]="dataLoggerType == 2 ? 'choosen-data-logger' : 'not-choosen-data-logger'"
+          (click)="changeDataLoggerType(2)">
+      </div>
     </div>
   </div>
   <br>
   <div class="row">
-    Choose data logger type:
+    <div class="col-md-1">
+      <h1>2.</h1>
+    </div>
+    <div class="col-md-11">
+      <div class="row">
+        Choose delimiter:
+      </div>
+      <div class="row">
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <label class="btn btn-secondary active">
+            <input type="radio" name="semicolon" id="semicolonDelimiterId" autocomplete="off"
+              [checked]="delimiterType == 1" 
+              (click)="changeDelimiterType(1)">
+            Semicolon <b>( ; )</b>
+          </label>
+          <label class="btn btn-secondary">
+            <input type="radio" name="comma" id="commaDelimiterId" autocomplete="off"
+              [checked]="delimiterType == 2" 
+              (click)="changeDelimiterType(2)">
+            Comma <b>( , )</b>
+          </label>
+        </div>
+      </div>
+    </div>
   </div>
+  <br>
   <div class="row">
-    <img src="../assets/firstTypeDataLogger.png" alt="First type of data logger"
-      [className]="dataLoggerType == 1 ? 'choosen-data-logger' : 'not-choosen-data-logger'"
-      (click)="changeDataLoggerType(1)">
-    <img src="../assets/secondTypeDataLogger.png" alt="Second type of data logger"
-      [className]="dataLoggerType == 2 ? 'choosen-data-logger' : 'not-choosen-data-logger'"
-      (click)="changeDataLoggerType(2)">
+    <div class="col-md-1">
+      <h1>3.</h1>
+    </div>
+    <div class="col-md-11">
+      <div class="row">
+        <div class="col-md-4" style="padding-left: 0px;">
+          <input (change)="uploadListener($event)" type="file" #csvReader name="Upload CSV" class="btn btn-primary" id="txtFileUpload" accept=".csv" />
+        </div>
+        <div class="col-md-1">
+          <input (click)="fileReset()" type="button" value="Reset" class="btn btn-secondary" />
+        </div>
+      </div>
+    </div>
   </div>
+  <br>
   <hr>
-  <div class="row" style="font-weight: bold;">
-    <div class="col-md-3"></div>
-    <div class="col-md-3">Days</div>
-    <div class="col-md-3">Hours</div>
-    <div class="col-md-3">Minutes</div>
-  </div>
-  <div class="row text-light bg-dark">
-    <div class="col-md-3"><b>Summary</b></div>
-    <div class="col-md-3">{{calculationSummary.days}}</div>
-    <div class="col-md-3">{{calculationSummary.hours}}</div>
-    <div class="col-md-3">{{calculationSummary.minutes}}</div>
-  </div>
-  <div *ngFor="let item of calculatedData" class="row">
-    <div class="col-md-3" [innerHTML]="item.HtmlText"></div>
-    <div class="col-md-3">
-      {{item.Days}}
+  <div *ngIf="vmData && vmData.calculatedSummary && vmData.calculatedData">
+    <div class="row" style="font-weight: bold;">
+      <div class="col-md-3"></div>
+      <div class="col-md-3">Days</div>
+      <div class="col-md-3">Hours</div>
+      <div class="col-md-3">Minutes</div>
     </div>
-    <div class="col-md-3">
-      {{item.Hours}}
+    <div class="row text-light bg-dark">
+      <div class="col-md-3"><b>Summary</b></div>
+      <div class="col-md-3">{{vmData.calculatedSummary.days}}</div>
+      <div class="col-md-3">{{vmData.calculatedSummary.hours}}</div>
+      <div class="col-md-3">{{vmData.calculatedSummary.minutes}}</div>
     </div>
-    <div class="col-md-3">
-      {{item.Minutes}}
+    <div *ngFor="let item of vmData.calculatedData" class="row">
+      <div class="col-md-3" [innerHTML]="item.HtmlText"></div>
+      <div class="col-md-3">
+        {{item.Days}}
+      </div>
+      <div class="col-md-3">
+        {{item.Hours}}
+      </div>
+      <div class="col-md-3">
+        {{item.Minutes}}
+      </div>
     </div>
   </div>
 </div>

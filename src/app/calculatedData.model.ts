@@ -1,4 +1,4 @@
-export class CalculatedDataStructure {
+export class CalculatedDataModel {
   private minutesDifference: number = 10;
   private htmlText: string;
 
