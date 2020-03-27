@@ -9,7 +9,7 @@ import * as moment from 'moment';
 @Injectable({
   providedIn: 'root'
 })
-export class FirstTypeDataLoggerService {
+export class SecondTypeDataLoggerService {
 
   private recordsFromCSV: Array<TemperatureDataModel> = [];
   private calculatedSummary: CalculatedSummaryModel = new CalculatedSummaryModel();
@@ -40,14 +40,14 @@ export class FirstTypeDataLoggerService {
       const currentRecord = (<string>value).split(delimiter);
       const csvRecord: TemperatureDataModel = new TemperatureDataModel();
 
-      csvRecord.date = currentRecord[0]
-        ? moment(currentRecord[0].trim(), "DD-mm-YY").format("DD-MM-YYYY")
+      csvRecord.date = currentRecord[2]
+        ? moment(currentRecord[2].trim(), "MM/DD/YYYY").format("DD-MM-YYYY")
         : null;
-      csvRecord.time = currentRecord[1]
-        ? currentRecord[1].trim()
+      csvRecord.time = currentRecord[3]
+        ? currentRecord[3].trim()
         : null;
-      csvRecord.temperature = currentRecord[2]
-        ? parseFloat(currentRecord[2].trim())
+      csvRecord.temperature = currentRecord[4]
+        ? parseFloat(currentRecord[4].trim())
         : 0;
       this.recordsFromCSV.push(csvRecord);
     });

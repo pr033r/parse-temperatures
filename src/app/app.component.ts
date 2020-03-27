@@ -1,8 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { CalculatedDataModel } from './calculatedData.model';
 import { FirstTypeDataLoggerService } from './dataLoggerServices/first-type.service';
-import { CalculatedSummaryModel } from './calculatedSummary.model';
-import { TemperaturesViewModel } from './temperaturesView.model';
+import { TemperaturesViewModel } from './models/temperaturesView.model';
+import { SecondTypeDataLoggerService } from './dataLoggerServices/second-type.service';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +16,10 @@ export class AppComponent {
   public delimiterType: number = 1;
   public dataLoggerType: number = 1;
 
-  constructor(private firstTypeDataLogger: FirstTypeDataLoggerService) { }
+  constructor(
+    private firstTypeDataLogger: FirstTypeDataLoggerService,
+    private secondTypeDataLogger: SecondTypeDataLoggerService
+  ) { }
 
   ngOnInit() {
     this.vmData = this.firstTypeDataLogger.vm;
@@ -34,6 +36,7 @@ export class AppComponent {
   public fileReset(): void {
     this.csvReader.nativeElement.value = "";
     this.firstTypeDataLogger.fileReset();
+    this.secondTypeDataLogger.fileReset();
     this.vmData = this.firstTypeDataLogger.vm;
   }
 
@@ -70,6 +73,10 @@ export class AppComponent {
       case 1:
         this.firstTypeDataLogger.fetchDataRecordsFromCSVFile(csvRecordsArray, choosenDelimiterType);
         this.vmData = this.firstTypeDataLogger.vm;
+        break;
+      case 2:
+        this.secondTypeDataLogger.fetchDataRecordsFromCSVFile(csvRecordsArray, choosenDelimiterType);
+        this.vmData = this.secondTypeDataLogger.vm;
         break;
       default:
         break;

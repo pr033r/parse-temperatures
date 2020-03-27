@@ -13,3 +13,7 @@ $data-logger-border: 7px;
   @extend %parent-for-data-logger;
   border: $data-logger-border solid white;
 }
+
+.background-for-row {
+  background-color: #aaa;
+}
