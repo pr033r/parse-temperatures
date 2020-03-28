@@ -2,6 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { FirstTypeDataLoggerService } from './dataLoggerServices/first-type.service';
 import { TemperaturesViewModel } from './models/temperaturesView.model';
 import { SecondTypeDataLoggerService } from './dataLoggerServices/second-type.service';
+import { version } from '../../package.json';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +17,8 @@ export class AppComponent {
   public vmData: TemperaturesViewModel = null;
   public delimiterType: number = 1;
   public dataLoggerType: number = 1;
+  public version: string = version;
+  public currentYear = moment().format('YYYY');
 
   constructor(
     private firstTypeDataLogger: FirstTypeDataLoggerService,
